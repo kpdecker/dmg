@@ -11,7 +11,7 @@ function mount(path, callback) {
   var command = [
     'hdiutil',
     'mount',
-    path
+    '"' + path + '"'
   ];
 
   exec(command.join(' '), function(err, stdout, stderr) {
@@ -43,7 +43,7 @@ function unmount(path, callback) {
   var command = [
     'hdiutil',
     'unmount',
-    path
+    '"' + path + '"'
   ];
 
   exec(command.join(' '), function(err) {
