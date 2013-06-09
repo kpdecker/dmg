@@ -1,11 +1,5 @@
 var exec = require('child_process').exec;
-var DMG = 'dmg';
-var VOLUME_REGEX = /\/Volumes\/(.*)\.dmg$/m;
-
-function assertDmg(path) {
-  if (path.split('.').pop() !== DMG)
-    throw new Error('will only mount .dmg files');
-}
+var VOLUME_REGEX = /\/Volumes\/(.*)/m;
 
 /**
  * Mount a dmg file and return its mounted path.
@@ -14,8 +8,6 @@ function assertDmg(path) {
  * @param {Function} callback [Error err, String mountedVolume].
  */
 function mount(path, callback) {
-  assertDmg(path);
-
   var command = [
     'hdiutil',
     'mount',
@@ -40,14 +32,13 @@ function mount(path, callback) {
 
 /**
  * Unmount a dmg volume.
- * Note- to prevent horrible accidents this will _not_ accept
- * any path that does not end .dmg.
  *
  * @param {String} path to unmount.
  * @param {Function} callback [Error err]
  */
 function unmount(path, callback) {
-  assertDmg(path);
+  if (!VOLUME_REGEX.test(path))
+    throw new Error('path must contain /Volumes/');
 
   var command = [
     'hdiutil',
