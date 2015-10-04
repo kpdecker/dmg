@@ -11,6 +11,7 @@ function mount(path, callback) {
   var command = [
     'hdiutil',
     'mount',
+    '-nobrowse',
     '"' + path + '"'
   ];
 
