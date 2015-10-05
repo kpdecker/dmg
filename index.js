@@ -44,6 +44,7 @@ function unmount(path, callback) {
   var command = [
     'hdiutil',
     'unmount',
+    '-force',
     '"' + path + '"'
   ];
 
